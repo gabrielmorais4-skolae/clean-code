@@ -3,7 +3,7 @@ const SHIPPING_FLAT_EUR = 7.99;     // euros
 const GIFT_WRAP_COST = 1.5          // euros
 const ONE_HUNDRED = 100;            // percent base
 const DISCOUNT_FIVE_PERCENT = 0.05; // percent base
-const DISCOUNT_TEN_PERCENT = 0.10;  // percent base (fixed typo)
+const DISCOUNT_TEN_PERCENT = 0.10;  // percent base
 
 type ProductType = {
     price: number,
