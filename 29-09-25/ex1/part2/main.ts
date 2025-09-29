@@ -50,3 +50,16 @@ function calculateTotalPurchase(products: ProductType[]) {
 
     return totalPurchase;
 }
+
+function handlePurchase(products: ProductType[], productsTax: number) {
+    const totalPurchase = calculateTotalPurchase(products);
+    const totalPurchaseAfterDiscount = calculateDiscount(totalPurchase);
+    const totalPurchaseAfterTax = applyTax(totalPurchaseAfterDiscount, productsTax);
+    const finalPurchasePrice = shippingCost(totalPurchaseAfterTax) + totalPurchaseAfterTax;
+
+    return finalPurchasePrice;
+}
+
+console.log(handlePurchase([{ price: 49, quantity: 1, giftWrap: false }], 20))
+console.log(handlePurchase([{ price: 75, quantity: 1, giftWrap: false }], 20))
+console.log(handlePurchase([{ price: 150, quantity: 1, giftWrap: false }], 20))
