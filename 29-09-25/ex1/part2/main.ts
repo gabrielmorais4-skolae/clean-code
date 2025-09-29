@@ -20,28 +20,33 @@ function shippingCost(orderTotal: number) {
     return orderTotal > SHIPPING_THRESHOLD_EUR ? 0 : SHIPPING_FLAT_EUR;
 }
 
-function totalY(a, tx) {
-    let tot = 0;
-    for (let i = 0; i < a.length; i++) {
-        let s = a[i].price * a[i].qty;
-        if (a[i].giftWrap) {
-            s = s + (1.5 * a[i].qty);
-        }
-        tot += s;
-    }
-    let disc = 0;
-    if (tot >= 50 && tot <= 100) {
-        disc = 0.05;
-    }
-    if (tot > 100) {
-        disc = 0.10;
-    }
-    tot = tot - (tot * disc);
-    tot = tot + (tot * (tx / 100));
-    if (tot > 100) {
-        tot = tot + 0;
+function giftWrapCost(quantity: number) {
+    return GIFT_WRAP_COST * quantity;
+}
+
+function calculateDiscount(totalPurchase: number) {
+    let discountPercentage = 0;
+
+    if (totalPurchase < 50) {
+        return totalPurchase;
+    } else if (totalPurchase >= 50 && totalPurchase <= 100) {
+        discountPercentage = DISCOUNT_FIVE_PERCENT;
     } else {
-        tot = tot + 7.99;
+        discountPercentage = DISCOUNT_TEN_PERCENT;
     }
-    return tot;
+
+    return totalPurchase - (totalPurchase * discountPercentage);
+}
+
+function calculateTotalPurchase(products: ProductType[]) {
+    let totalPurchase = 0;
+    for (let i = 0; i < products.length; i++) {
+        let currentProductValue = products[i].price * products[i].quantity;
+        if (products[i].giftWrap) {
+            currentProductValue += giftWrapCost(products[i].quantity);
+        }
+        totalPurchase += currentProductValue;
+    }
+
+    return totalPurchase;
 }
